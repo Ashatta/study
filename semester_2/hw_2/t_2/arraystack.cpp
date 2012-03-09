@@ -3,14 +3,14 @@
 int ArrayStack::top()
 {
     if (isEmpty())
-        throw emptyStack;
+        throw emptyStack();
     return mData[mLength - 1];
 }
 
 int ArrayStack::pop()
 {
     if (isEmpty())
-        throw emptyStack;
+        throw emptyStack();
     return mData[--mLength];
 }
 
@@ -26,7 +26,7 @@ void ArrayStack::ensureCapacity()
 {
     mCapacity *= 2;
     int * newData = new int[mCapacity];
-    for (int i = 0, i < mLength; i++)
+    for (int i = 0; i < mLength; i++)
         newData[i] = mData[i];
     delete[] mData;
     mData = newData;
