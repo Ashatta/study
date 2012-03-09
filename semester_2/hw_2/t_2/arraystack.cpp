@@ -3,14 +3,14 @@
 int ArrayStack::top()
 {
     if (isEmpty())
-        throw emptyStack();
+        throw EmptyStack();
     return mData[mLength - 1];
 }
 
 int ArrayStack::pop()
 {
     if (isEmpty())
-        throw emptyStack();
+        throw EmptyStack();
     return mData[--mLength];
 }
 

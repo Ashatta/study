@@ -1,6 +1,6 @@
 #pragma once
 
-class emptyStack {};
+class EmptyStack {};
 
 class Stack {
 public:

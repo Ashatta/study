@@ -7,7 +7,7 @@ class StackMachine
         int calculate(std::istream &source);
 
     private:
-        int mCalculate(int operand1, int operand2, char operation);
+        int calculate(int operand1, int operand2, char operation);
         LinkedStack stack;
 };
 

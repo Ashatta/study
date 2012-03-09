@@ -3,7 +3,7 @@
 int LinkedStack::top()
 {
     if (isEmpty())
-        throw emptyStack();
+        throw EmptyStack();
     return mHead->next->value;
 }
 
@@ -17,7 +17,7 @@ void LinkedStack::push(int value)
 int LinkedStack::pop()
 {
     if (isEmpty())
-        throw emptyStack();
+        throw EmptyStack();
     Node * popped = mHead->next;
     int x = popped->value;
     mHead->next = popped->next;
