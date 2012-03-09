@@ -10,9 +10,9 @@ class MatrixSorter
         }
     private:
         static void qSort(int ** matrix, int n, int left, int right);
-        static void swap(int &a, int &b)
+        static void swap(int* &a, int* &b)
         {
-            int tmp = a;
+            int * tmp = a;
             a = b;
             b = tmp;
         } 
