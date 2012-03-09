@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdlib>
 #include "stack.h"
 
 class LinkedStack : public Stack {
@@ -24,7 +25,7 @@ private:
             value(x),
             next(nextNode)
         {}
-    }
+    };
 
     int mLength;
     Node * mHead;

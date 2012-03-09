@@ -1,5 +1,5 @@
 #pragma once
-#include "arraystack.h"
+#include "linkedstack.h"
 
 class StackMachine
 {
@@ -8,6 +8,6 @@ class StackMachine
 
     private:
         int mCalculate(int operand1, int operand2, char operation);
-        ArrayStack stack;
+        LinkedStack stack;
 };
 

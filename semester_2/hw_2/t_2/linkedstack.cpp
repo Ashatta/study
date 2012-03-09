@@ -3,7 +3,7 @@
 int LinkedStack::top()
 {
     if (isEmpty())
-        throw emptyStack;
+        throw emptyStack();
     return mHead->next->value;
 }
 
@@ -17,7 +17,7 @@ void LinkedStack::push(int value)
 int LinkedStack::pop()
 {
     if (isEmpty())
-        throw emptyStack;
+        throw emptyStack();
     Node * popped = mHead->next;
     int x = popped->value;
     mHead->next = popped->next;
@@ -26,4 +26,15 @@ int LinkedStack::pop()
     return x;
 }
 
+LinkedStack::~LinkedStack()
+{
+    Node * removed = mHead->next;
+    while (removed != NULL)
+    {
+        mHead->next = removed->next;
+        delete removed;
+        removed = mHead->next;
+    }
+    delete mHead;
+}
 
