@@ -38,12 +38,12 @@ void SimpleCalculator::recalculate()
         case '*': result = arg1 * arg2;
               break;
         case '/': if (arg2 == 0)
-          {
-                    ui->result->setText(QString::fromUtf8("\u221E"));
-            return;
-          }
-          else
-            result = arg1 / arg2;
+                  {
+                      ui->result->setText(QString::fromUtf8("\u221E"));
+                      return;
+                  }
+                  else
+                      result = arg1 / arg2;
     }
     ui->result->setText(QString::number(result));
     return;
