@@ -4,7 +4,7 @@
 class Matrix
 {
 public:
-    Matrix(int size);
+    Matrix(int size); // initializing with random numbers
     ~Matrix();
     void print(std::ostream &out);
     int * operator[](int i) { return matrix[i]; }

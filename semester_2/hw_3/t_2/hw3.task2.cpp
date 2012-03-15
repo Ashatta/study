@@ -7,14 +7,10 @@ using namespace std;
 
 int main(int argc, char ** argv)
 {
-    bool file = false;
-    if (argc > 1)
-        file = true;
-
     int n = 0;
-    clog << "Printing matrix as a spiral starting with"
-         << "central element. Use './hw3.task2 filename'"
-         << "to put a result in a file."
+    clog << "Printing matrix as a spiral starting with\n"
+         << "central element. Use './hw3.task2 filename\n'"
+         << "to put a result in a file.\n"
          << "Type the size of the matrix (odd) n = ";
     cin >> n;
     if (!(n % 2))
@@ -25,12 +21,14 @@ int main(int argc, char ** argv)
     
     Matrix matrix(n);
 
-    if (file)
+    if (argc > 1) // if a user gave a name of an output file
     {
         ofstream out(argv[1]);
+
         matrix.print(out);
         SpiralPrinter printer(out);
         printer.print(matrix);
+
         out.close();
     }
     else
@@ -42,3 +40,4 @@ int main(int argc, char ** argv)
         
     return 0;
 } 
+
