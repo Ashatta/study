@@ -1,7 +1,7 @@
 #include <iostream>
 #include "stackmachine.h"
 
-int StackMachine::calculate(int operand1, int operand2, char operation)
+double StackMachine::calculate(double operand1, double operand2, char operation)
 {
     switch (operation)
     {
@@ -12,10 +12,10 @@ int StackMachine::calculate(int operand1, int operand2, char operation)
     }
 }
 
-int StackMachine::calculate(std::istream &source)
+double StackMachine::calculate(std::istream &source)
 try
 {
-    int num = 0;
+    double num = 0;
     source >> num;
     stack.push(num);
 

@@ -1,13 +1,13 @@
 #pragma once
-#include "linkedstack.h"
+#include "arraystack.h"
 
 class StackMachine
 {
-    public:
-        int calculate(std::istream &source);
+public:
+    double calculate(std::istream &source);
 
-    private:
-        int calculate(int operand1, int operand2, char operation);
-        LinkedStack stack;
+private:
+    double calculate(double operand1, double operand2, char operation);
+    ArrayStack<double> stack;
 };
 
