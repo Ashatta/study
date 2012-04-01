@@ -59,4 +59,3 @@ void PolishConverter::convert(std::istream &source, std::stringstream &dest)
         dest << stack.pop() << ' ';
     }
 }
-

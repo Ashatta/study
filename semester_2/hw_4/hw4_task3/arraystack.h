@@ -1,6 +1,9 @@
 #pragma once
 #include "stack.h"
 
+/** Template class ArrayStack implements a Stack and is based on an array.
+ *  Derives the class Stack.
+ */
 template<class T>
 class ArrayStack : public Stack<T>
 {
@@ -20,8 +23,11 @@ class ArrayStack : public Stack<T>
     private:
         int mLength;
         int mCapacity;
-        T * mData;
+        T * mData; ///< Array of stack elements.
 
+        /** Method ensureCapacity expands ArrayStack to avoid overflows
+         *  by relocating it.
+         */
         void ensureCapacity();
 };
 

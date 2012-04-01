@@ -1,7 +1,11 @@
 #pragma once
 
+/** Exception that is thrown when trying to pop or look at the top element
+  * of an empty stack
+  */
 class EmptyStack {};
 
+/** Abstract template class Stack. */
 template<class T>
 class Stack {
 public:

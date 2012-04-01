@@ -40,4 +40,3 @@ catch (EmptyStack e)
     std::cerr << "Incorrect input" << std::endl;
     throw; 
 }
-
