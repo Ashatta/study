@@ -1,9 +1,7 @@
 #pragma once
 #include "stack.h"
 
-/** Template class ArrayStack implements a Stack and is based on an array.
- *  Derives the class Stack.
- */
+/** Template class ArrayStack implements a Stack and is based on an array. */
 template<class T>
 class ArrayStack : public Stack<T>
 {
