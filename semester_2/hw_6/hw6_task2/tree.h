@@ -17,11 +17,11 @@ public:
 protected:
     struct TreeNode
     {
+        T key;
         TreeNode* leftChild;
         TreeNode* rightChild;
-        T key;
 
-        TreeNode(T value)
+        TreeNode(T value = 0)
             : key(value)
             , leftChild(0)
             , rightChild(0)
@@ -55,9 +55,9 @@ void Tree<T>::add(T key)
             curr = curr->leftChild;
     }
     if (key > parent->key)
-        parent->rightChild(key);
+        parent->rightChild = new TreeNode(key);
     else
-        parent->leftChild(key);
+        parent->leftChild = new TreeNode(key);
 }
 
 template<class T>
@@ -97,14 +97,14 @@ void Tree<T>::remove(TreeNode* &node, T key)
     if (node->leftChild == 0)
     {
         TreeNode* tmp = node;
-        node = node->rightChild;
+        node = tmp->rightChild;
         tmp->rightChild = 0;
         delete tmp;
     }
     else if (node->rightChild == 0)
     {
         TreeNode* tmp = node;
-        node = node->leftChild;
+        node = tmp->leftChild;
         tmp->leftChild = 0;
         delete tmp;
     }
@@ -114,7 +114,7 @@ void Tree<T>::remove(TreeNode* &node, T key)
         while (succ->leftChild)
             succ = succ->leftChild;
         node->key = succ->key;
-        remove(succ, succ->key);
+        remove(node->rightChild, succ->key);
     }
 }
 

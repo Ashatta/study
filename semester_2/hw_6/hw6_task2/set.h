@@ -8,17 +8,21 @@ public:
     Set() {}
     ~Set() {}
 
+    void add(T value) { Tree<T>::add(value); }
+    bool hasKey(T value) { return Tree<T>::hasKey(value); }
+    void remove(T value) { Tree<T>::remove(value); }
+    void add(Set<T> &second) { add(second, second.root); }
+
     Set<T> setIntersection(Set<T> &second) { setIntersection(this->root, second); }
     Set<T> setUnion(Set<T> &second);
-    Set<T> add(Set<T> &second) { add(second, second.root); }
 
 protected:
-    Set<T> setIntersection(typename TreeNode* node, Set<T> &second);
-    Set<T> add(Set<T> &second, typename TreeNode* node);
+    Set<T> setIntersection(typename Tree<T>::TreeNode* node, Set<T> &second);
+    void add(Set<T> &second, typename Tree<T>::TreeNode* node);
 };
 
 template<class T>
-Set<T> Set<T>::setIntersection(typename TreeNode* node, Set<T> &second)
+Set<T> Set<T>::setIntersection(typename Tree<T>::TreeNode* node, Set<T> &second)
 {
     if (node == 0)
         return;
@@ -35,10 +39,11 @@ Set<T> Set<T>::setUnion(Set<T> &second)
     Set<T> result;
     result.add(*this);
     result.add(second);
+    return result;
 }
 
 template<class T>
-Set<T> Set<T>::add(Set<T> &second, typename TreeNode* node)
+void Set<T>::add(Set<T> &second, typename Tree<T>::TreeNode* node)
 {
     if (node == 0)
         return;
