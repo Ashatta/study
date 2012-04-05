@@ -9,7 +9,6 @@ public:
     ~Tree() { delete root; }
 
     void add(T key);
-    void remove(T key);
     bool isEmpty() { return root == 0; }
     bool hasKey(T key);
     void remove(T key) { remove(root, key); }
@@ -24,8 +23,8 @@ protected:
 
         TreeNode(T value)
             : key(value)
-            , leftChild(left)
-            , rightChild(right)
+            , leftChild(0)
+            , rightChild(0)
         {}
         ~TreeNode() { delete leftChild; delete rightChild; }
     };
@@ -129,4 +128,3 @@ void Tree<T>::print(TreeNode* node)
         print(node->rightChild);
     }
 }
-
