@@ -37,6 +37,11 @@ void PriorityQueue<T>::enqueue(T value, int priority)
         first = new Element(value, priority);
         return;
     }
+    if (priority > first->priority)
+    {
+        first = new Element(value, priority, first);
+        return;
+    }
     Element* tmp = first;
     while (tmp->next != 0 && tmp->next->priority >= priority)
         tmp = tmp->next;
@@ -59,5 +64,9 @@ template<class T>
 PriorityQueue<T>::~PriorityQueue()
 {
     while (!isEmpty())
-        dequeue();
+    {
+        Element* deleted = first;
+        first = first->next;
+        delete deleted;
+    }
 }
