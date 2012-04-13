@@ -73,15 +73,15 @@ void LinkedList::remove(int value)
     return;
 }
 
-void LinkedList::print()
+void LinkedList::print(std::ostream &out)
 {
     Node * tmp = mHead->next;
     while (tmp != NULL)
     {
-        std::cout << tmp->value << ' ';
+        out << tmp->value << ' ';
         tmp = tmp->next;
     }
-    std::cout << std::endl;
+    out << std::endl;
 }
 
 LinkedList::~LinkedList()

@@ -18,10 +18,10 @@ void ArrayList::insert(int value, int pos)
         mData[mLength++] = value;
         return;
     }
+    mLength++;
     for (int i = mLength - 1; i > pos; i--)
         mData[i] = mData[i - 1];
     mData[pos] = value;
-    mLength++;
     return;
 }
 
@@ -51,11 +51,12 @@ void ArrayList::remove(int value)
     return;
 }
 
-void ArrayList::print()
+void ArrayList::print(std::ostream &out)
 {
     for (int i = 0; i < mLength; i++)
-       std::cout << mData[i] << ' ';
-    std::cout << std::endl;
+       out << mData[i] << ' ';
+//    out << std::endl;
+    out << '\n';
     return;
 } 
 

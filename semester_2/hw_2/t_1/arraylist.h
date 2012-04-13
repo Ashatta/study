@@ -17,7 +17,7 @@ public:
     void insert(int value, int pos);
     void removeAt(int pos);
     void remove(int value);
-    void print();
+    void print(std::ostream &out);
 
 private:
     int mLength;

@@ -16,7 +16,7 @@ class LinkedList : public List
         void insert(int value, int pos);
         void removeAt(int pos);
         void remove(int value);
-        void print();
+        void print(std::ostream &out);
         
     private:
         struct Node
