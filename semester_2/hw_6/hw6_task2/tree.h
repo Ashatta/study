@@ -1,18 +1,25 @@
 #pragma once
 #include <iostream>
 
+/// Template class Tree is a binary search tree
 template<class T>
 class Tree
 {
 public:
-    Tree() : root(0) {}
+    Tree() : root(NULL) {}
     ~Tree() { delete root; }
 
-    void add(T key);
-    bool isEmpty() { return root == 0; }
-    bool hasKey(T key);
-    void remove(T key) { remove(root, key); }
-    void print() { print(root); std::cout << std::endl; }
+    /// Method add inserts key into a tree
+    void add(const T &key);
+    /// Method isEmpty returns true if a tree contains no element
+    bool isEmpty() const { return root == NULL; }
+    /// Method hasKey return true if key is in a tree
+    bool hasKey(const T &key) const;
+    /// Method remove deletes key from the tree
+    void remove(const T &key) { remove(root, key); }
+    /// Method print prints tree in increasing order
+    void print(std::ostream &out) const
+    { print(root, out); out << std::endl; }
 
 protected:
     struct TreeNode
@@ -23,25 +30,28 @@ protected:
 
         TreeNode(T value = 0)
             : key(value)
-            , leftChild(0)
-            , rightChild(0)
+            , leftChild(NULL)
+            , rightChild(NULL)
         {}
         ~TreeNode() { delete leftChild; delete rightChild; }
     };
     TreeNode* root;
 
-    void remove(TreeNode* &node, T key);
-    void print(TreeNode* node);
+    /// Protected method remove deletes key from a subtree node
+    void remove(TreeNode* &node, const T &key);
+    /// Protected method print prints a subtree node
+    void print(TreeNode* node, std::ostream &out) const;
 };
 
 template<class T>
-void Tree<T>::add(T key)
+void Tree<T>::add(const T &key)
 {
     if (isEmpty())
     {
         root = new TreeNode(key);
         return;
     }
+
     TreeNode* curr = root;
     TreeNode* parent = 0;
     while (curr)
@@ -61,10 +71,11 @@ void Tree<T>::add(T key)
 }
 
 template<class T>
-bool Tree<T>::hasKey(T key)
+bool Tree<T>::hasKey(const T &key) const
 {
     if (isEmpty())
         return false;
+
     TreeNode* curr = root;
     while (curr && curr->key != key)
         if (key > curr->key)
@@ -73,11 +84,12 @@ bool Tree<T>::hasKey(T key)
             curr = curr->leftChild;
     if (curr)
         return true;
+
     return false;
 }
 
 template<class T>
-void Tree<T>::remove(TreeNode* &node, T key)
+void Tree<T>::remove(TreeNode* &node, const T &key)
 {
     if (node == 0)
         return;
@@ -119,12 +131,12 @@ void Tree<T>::remove(TreeNode* &node, T key)
 }
 
 template<class T>
-void Tree<T>::print(TreeNode* node)
+void Tree<T>::print(TreeNode* node, std::ostream &out) const
 {
     if (node)
     {
-        print(node->leftChild);
-        std::cout << node->key << ' ';
-        print(node->rightChild);
+        print(node->leftChild, out);
+        out << node->key << ' ';
+        print(node->rightChild, out);
     }
 }

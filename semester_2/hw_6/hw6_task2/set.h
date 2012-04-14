@@ -1,6 +1,7 @@
 #pragma once
 #include "tree.h"
 
+/// Template class Set is based on a binary search tree
 template<class T>
 class Set : public Tree<T>
 {
@@ -8,33 +9,50 @@ public:
     Set() {}
     ~Set() {}
 
-    void add(T value) { Tree<T>::add(value); }
-    bool hasKey(T value) { return Tree<T>::hasKey(value); }
-    void remove(T value) { Tree<T>::remove(value); }
-    void add(Set<T> &second) { add(second, second.root); }
+    /// Method add(T&) inserts value into the set
+    void add(const T &value) { Tree<T>::add(value); }
+    /// Method add(Set<T>&) inserts elements of set second into the set
+    void add(const Set<T> &second) { add(second.root); }
+    bool hasKey(const T &value) const { return Tree<T>::hasKey(value); }
+    void remove(const T &value) { Tree<T>::remove(value); }
+    void print(std::ostream &out) const { Tree<T>::print(out); }
 
-    Set<T> setIntersection(Set<T> &second) { setIntersection(this->root, second); }
-    Set<T> setUnion(Set<T> &second);
+    /** Method setIntersection returns set that is an intersection
+     *  with set second
+     */
+    Set<T> setIntersection(const Set<T> &second) 
+    { return setIntersection(this->root, second); }
+    /// Method setUnion returns a set that is an union with set second
+    Set<T> setUnion(const Set<T> &second);
 
 protected:
-    Set<T> setIntersection(typename Tree<T>::TreeNode* node, Set<T> &second);
-    void add(Set<T> &second, typename Tree<T>::TreeNode* node);
+    /** Protected method setIntersection returns set that is an intersection
+     *  of subset node and set second
+     */
+    Set<T> setIntersection(typename Tree<T>::TreeNode* node, const Set<T> &second);
+    /** Protected method add inserts elements of set second into the 
+     *  subset node
+     */
+    void add(typename Tree<T>::TreeNode* node);
 };
 
 template<class T>
-Set<T> Set<T>::setIntersection(typename Tree<T>::TreeNode* node, Set<T> &second)
+Set<T> Set<T>::setIntersection(typename Tree<T>::TreeNode* node, const Set<T> &second)
 {
-    if (node == 0)
-        return;
-    static Set<T> result;
+    Set<T> result;
+    if (node == NULL)
+        return result;
+
     if (second.hasKey(node->key))
         result.add(node->key);
-    setIntersection(node->leftChild, second);
-    setIntersection(node->rightChild, second);
+
+    result.add(setIntersection(node->leftChild, second));
+    result.add(setIntersection(node->rightChild, second));
+    return result;
 }
 
 template<class T>
-Set<T> Set<T>::setUnion(Set<T> &second)
+Set<T> Set<T>::setUnion(const Set<T> &second)
 {
     Set<T> result;
     result.add(*this);
@@ -43,11 +61,11 @@ Set<T> Set<T>::setUnion(Set<T> &second)
 }
 
 template<class T>
-void Set<T>::add(Set<T> &second, typename Tree<T>::TreeNode* node)
+void Set<T>::add(typename Tree<T>::TreeNode* node)
 {
     if (node == 0)
         return;
-    add(second.root);
-    add(second.root->leftChild);
-    add(second.root->rightChild);
+    add(node->key);
+    add(node->leftChild);
+    add(node->rightChild);
 }
