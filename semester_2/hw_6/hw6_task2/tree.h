@@ -6,7 +6,7 @@ template<class T>
 class Tree
 {
 public:
-    Tree() : root(NULL) {}
+    Tree() : root(0) {}
     ~Tree() { delete root; }
 
     /// Method add inserts key into a tree
@@ -28,7 +28,7 @@ protected:
         TreeNode* leftChild;
         TreeNode* rightChild;
 
-        TreeNode(T value = 0)
+        TreeNode(T value)
             : key(value)
             , leftChild(NULL)
             , rightChild(NULL)

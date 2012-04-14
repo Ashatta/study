@@ -63,7 +63,7 @@ Set<T> Set<T>::setUnion(const Set<T> &second)
 template<class T>
 void Set<T>::add(typename Tree<T>::TreeNode* node)
 {
-    if (node == 0)
+    if (node == NULL)
         return;
     add(node->key);
     add(node->leftChild);
