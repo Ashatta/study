@@ -1,6 +1,9 @@
 #pragma once
 #include "arraystack.h"
 
+class DivisionByZeroException {};
+class IncorrectInputException {};
+
 class StackMachine
 {
 public:

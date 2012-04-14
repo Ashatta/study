@@ -32,6 +32,7 @@ private:
     Node * mHead;
 };
 
+template<class T>
 T LinkedStack<T>::top()
 {
     if (isEmpty())
@@ -39,6 +40,7 @@ T LinkedStack<T>::top()
     return mHead->next->value;
 }
 
+template<class T>
 void LinkedStack<T>::push(T value)
 {
     mHead->next = new Node(mHead->next, value);
@@ -46,6 +48,7 @@ void LinkedStack<T>::push(T value)
     return;
 } 
 
+template<class T>
 T LinkedStack<T>::pop()
 {
     if (isEmpty())
@@ -58,7 +61,8 @@ T LinkedStack<T>::pop()
     return x;
 }
 
-LinkedStack::~LinkedStack()
+template<class T>
+LinkedStack<T>::~LinkedStack()
 {
     Node * removed = mHead->next;
     while (removed != NULL)

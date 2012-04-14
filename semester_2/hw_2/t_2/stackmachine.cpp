@@ -8,7 +8,9 @@ double StackMachine::calculate(double operand1, double operand2, char operation)
         case '+': return operand1 + operand2;
         case '-': return operand1 - operand2;
         case '*': return operand1 * operand2;
-        default: return operand1 / operand2;
+        default: if (operand2 == 0.0)
+                     throw DivisionByZeroException();
+                 return operand1 / operand2;
     }
 }
 
@@ -29,15 +31,20 @@ try
             stack.push(num);
         }
         else if (!isspace(ch))
-            stack.push(calculate(stack.pop(), stack.pop(), ch));
+        {
+            double op2 = stack.pop();
+            stack.push(calculate(stack.pop(), op2, ch));
+        }
         source.get();
         ch = source.peek();
     }
-    return stack.top();
+    double result = stack.pop();
+    if (!stack.isEmpty())
+        throw IncorrectInputException();
+    return result;
 }
-catch (EmptyStack e)
+catch (EmptyStack)
 {
-    std::cerr << "Incorrect input" << std::endl;
-    throw; 
+    throw IncorrectInputException(); 
 }
 
