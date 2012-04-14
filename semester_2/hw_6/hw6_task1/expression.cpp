@@ -3,9 +3,6 @@
 #include <cctype>
 #include "expression.h"
 
-class invalidArgument {};
-class invalidOperation {};
-
 const int operNum = 4;
 const char operations[] = {'+', '-', '*', '/'};
 
@@ -20,6 +17,8 @@ int Expression::calculate()
         case '*' :
             return left->calculate() * right->calculate(); 
         default:
+            if (right->calculate() == 0)
+                throw DivisionByZeroException();
             return left->calculate() / right->calculate(); 
     }
 }
@@ -52,7 +51,7 @@ Node * Expression::getNode(std::istream &in)
     if (in.peek() >= '0' && in.peek() <= '9')
         return new Number(in); 
 
-    throw invalidArgument(); 
+    throw InvalidArgumentException(); 
 }
 
 Expression::Expression(std::istream &in)
@@ -63,7 +62,7 @@ Expression::Expression(std::istream &in)
     while (isspace(operation))
         in >> operation;
     if (isInvalidOperation(operation))
-        throw invalidOperation();
+        throw InvalidOperationException();
 
     left = getNode(in);
     right = getNode(in);

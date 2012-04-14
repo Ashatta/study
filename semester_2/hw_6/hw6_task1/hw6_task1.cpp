@@ -20,14 +20,25 @@ int main()
         cerr << "Error reading from file" << endl;
         return 1;
     }
+        
     Expression expression(in);
-
+    
     cout << "Expression: ";
     expression.print(cout);
     cout << endl;
 
-    cout << "Result = " << expression.calculate() << endl;
+    try
+    {
+        cout << "Result = " << expression.calculate() << endl;
+    }
+    catch (DivisionByZeroException)
+    {
+        cout << "Ooooops! Divided by zero!" << endl;
+        in.close();
+        return 2;
+    }
 
+    in.close();
     return 0;
 }
 
