@@ -10,7 +10,7 @@ public:
     virtual void insert(int value, int pos) = 0;
     virtual void removeAt(int pos) = 0;
     virtual void remove(int value) = 0;
-    virtual void print() = 0;
+    virtual void print(std::ostream &out) = 0;
     virtual ~List() {}
 };
 
