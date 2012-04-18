@@ -6,8 +6,8 @@ QT += testlib \
 SOURCES += treesettest.cpp
 
 HEADERS += \
-    set.h \
     tree.h \
     treetest.h \
+    set.h \
     settest.h
 

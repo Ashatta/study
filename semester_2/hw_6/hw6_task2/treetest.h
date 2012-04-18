@@ -76,6 +76,45 @@ private slots:
         QVERIFY(tree->hasKey(3));
     }
 
+    void testPreorder()
+    {
+        int const values[] = { 3, 8, 2, 4, 1, 0, 34, 28, 47, 5 };
+        for (int i = 0; i < 10; i++)
+            tree->add(values[i]);
+
+        std::stringstream out;
+        std::string result("3 2 1 0 8 4 5 34 28 47 ");
+        Printer p(out);
+        tree->preorder(p);
+        QCOMPARE(out.str(), result);
+    }
+
+    void testPostorder()
+    {
+        int const values[] = { 3, 8, 2, 4, 1, 0, 34, 28, 47, 5 };
+        for (int i = 0; i < 10; i++)
+            tree->add(values[i]);
+
+        std::stringstream out;
+        std::string result("0 1 2 5 4 28 47 34 8 3 ");
+        Printer p(out);
+        tree->postorder(p);
+        QCOMPARE(out.str(), result);
+    }
+
+    void testSymmorder()
+    {
+        int const values[] = { 3, 8, 2, 4, 1, 0, 34, 28, 47, 5 };
+        for (int i = 0; i < 10; i++)
+            tree->add(values[i]);
+
+        std::stringstream out;
+        std::string result("0 1 2 3 4 5 8 28 34 47 ");
+        Printer p(out);
+        tree->symmorder(p);
+        QCOMPARE(out.str(), result);
+    }
+
     void testPrint()
     {
         int const values[] = { 3, 8, 2, 4, 1, 0, 34, 28, 47, 5 };
@@ -89,5 +128,14 @@ private slots:
 
 private:
     Tree<int>* tree;
+    class Printer
+    {
+    public:
+        Printer(std::ostream &out) : str(out) {}
+        void operator()(int value)
+        { str << value << ' '; }
+    private:
+        std::ostream &str;
+    };
 };
 
