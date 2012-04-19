@@ -67,7 +67,7 @@ void LinkedList<T>::insert(T value, int pos)
 {
     if (isEmpty())
     {
-        mHead->next = new Node(value, NULL);
+        mHead->next = new Node(value);
         mLength++;
         return;
     }

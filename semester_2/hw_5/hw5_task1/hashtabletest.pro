@@ -3,8 +3,10 @@ TARGET = test
 QT += core \
     testlib
 
-SOURCES = hashtabletest.cpp
+SOURCES = hashtabletest.cpp \
+    functions.cpp
 
 HEADERS = hashtable.h \
     hashtabletest.h \
-    linkedlist.h 
+    linkedlist.h \
+    functions.h
