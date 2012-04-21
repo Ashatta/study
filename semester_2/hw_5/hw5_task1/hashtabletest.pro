@@ -1,12 +1,11 @@
 TARGET = test
 
-QT += core \
-    testlib
+QT += core testlib
 
 SOURCES = hashtabletest.cpp \
-    functions.cpp
+    stringhashers.cpp \
 
 HEADERS = hashtable.h \
     hashtabletest.h \
     linkedlist.h \
-    functions.h
+    stringhashers.h \

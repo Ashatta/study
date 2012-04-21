@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include "hashtable.h"
-#include "functions.h"
+#include "stringhashers.h"
 
 class HashTableTest : public QObject
 {
@@ -13,33 +13,37 @@ private slots:
     void init()
     {
         table = new HashTable<std::string>(10);
+        hasher1 = new StringHasher1;
+        hasher2 = new StringHasher2;
     }
 
     void cleanup()
     {
         delete table;
+        delete hasher1;
+        delete hasher2;
     }
 
-    void testHashFunctionNotSet()
+    void testHasherNotSet()
     {
         try
         {
             table->add("la");
             QFAIL("Hash function is not set");
         }
-        catch (HashFunctionIsNotSetException)
+        catch (HasherIsNotSetException)
         {}
     }
 
-    void testSetHashFunction()
+    void testSetHasher()
     {
-        table->setHashFunction(&hFunc1);
+        table->setHasher(hasher1);
         table->add("la");
     } 
 
     void testAdd()
     {
-        table->setHashFunction(&hFunc1);
+        table->setHasher(hasher1);
         QCOMPARE(table->size(), 0);
         table->add("la");
         table->add("alal");
@@ -53,7 +57,7 @@ private slots:
 
     void testRemove()
     {
-        table->setHashFunction(&hFunc1);
+        table->setHasher(hasher1);
         table->add("la");
         table->add("alal");
         table->add("gooo");
@@ -67,12 +71,12 @@ private slots:
 
     void testChangeFunction()
     {
-        table->setHashFunction(&hFunc2);
+        table->setHasher(hasher2);
         table->add("bralala");
         table->add("orange");
         table->add("LOL");
         table->add("ice cream");
-        table->setHashFunction(&hFunc1);
+        table->setHasher(hasher1);
         QCOMPARE(table->size(), 4);
         QVERIFY(table->hasValue("LOL"));
         QVERIFY(table->hasValue("ice cream"));
@@ -82,7 +86,7 @@ private slots:
 
     void testRehashOverwhelming()
     {
-        table->setHashFunction(&hFunc1);
+        table->setHasher(hasher1);
         const std::string nums[] = { "one", "two", "three", 
                                      "four", "five" };
         for (int i = 0; i < 5; i++)
@@ -99,7 +103,7 @@ private slots:
 
     void testShowStatistics()
     {
-        table->setHashFunction(&hFunc1);
+        table->setHasher(hasher1);
         table->add("log");
         table->add("goo");
         table->add("purple");
@@ -112,7 +116,7 @@ private slots:
         std::stringstream out2;
         table->showStatistics(out2);
         std::string result2("Number of elements: 6\nSize of the table: 24\nLoad factor: 0.25\nNumber of occupied cells: 3\nNumber of conflicts: 3\nMax chain size: 3\n");
-        table->setHashFunction(&hFunc2);
+        table->setHasher(hasher2);
         std::stringstream out3;
         table->showStatistics(out3);
         std::string result3("Number of elements: 6\nSize of the table: 24\nLoad factor: 0.25\nNumber of occupied cells: 6\nNumber of conflicts: 0\nMax chain size: 1\n");
@@ -122,4 +126,6 @@ private slots:
     }
 private:
     HashTable<std::string>* table;
+    StringHasher1* hasher1;
+    StringHasher2* hasher2;
 };

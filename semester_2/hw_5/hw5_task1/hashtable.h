@@ -1,22 +1,12 @@
 #pragma once
 #include <iostream>
 #include "linkedlist.h"
+#include "hasher.h"
 
 /** HashFunctionIsNotSetException is thrown when trying to add, remove or
- *  find elment in the table with hashFunction == defaultFunction.
+ *  find elment in the table when a pointer to hasher in the table is NULL.
  */
-class HashFunctionIsNotSetException {};
-
-/** defaultFunction is a default value of hashFunction. Does nothing,
- *  just throws HashFunctionIsNotSetException.
- */
-template<class T>
-int defaultFunction(const T &value)
-{
-    throw HashFunctionIsNotSetException();
-    std::cout << &value << std::endl;
-    return 0;
-}
+class HasherIsNotSetException {};
 
 /** Template class HashTable is a hashtable that solves conflicts by chain
  *  method. Uses linked list to store a chain. Objects must have
@@ -28,15 +18,13 @@ class HashTable
 public:
     /** Constructor of HashTable takes three optional arguments:
      *  number of cells, maximum load factor of a table and 
-     *  pointer to a hash function.
+     *  pointer to a hasher.
      */
-    HashTable(int cap = 64, 
-              double lfactor = 0.5, 
-              int (*hFunc)(const T &value) = &defaultFunction) 
+    HashTable(int cap = 64, double lfactor = 0.5, Hasher<T>* h = NULL) 
         : mSize(0)
         , capacity(cap)
         , table(new LinkedList<T>[capacity])
-        , hashFunction(hFunc)
+        , hasher(h)
         , maxLoadFactor(lfactor)
     {}
     ~HashTable() { delete[] table; }
@@ -51,16 +39,16 @@ public:
     int size() { return mSize; }
     /// Method loadfactor returns a load factor of the table.
     double loadfactor() { return (double) mSize / capacity; }
-    /** Method setHashFunction changes a hash function that is already set
-     *  to func. Nothing is done then func is the same as hashFunction.
+    /** Method setHasher changes a hasher that is already set
+     *  to hasher h. Nothing is done than the hasher is the same.
      */
-    void setHashFunction(int (*func)(const T &value))
+    void setHasher(Hasher<T>* h)
     { 
-        if (func != hashFunction) 
-        { 
-            hashFunction = func; 
+        if (hasher != h)
+        {
+            hasher = h; 
             rehash(capacity); 
-        } 
+        }
     }
     /** Method showStatistics prints to the stream out number of elements
      *  in the table, number of its cells, current load factor, number of 
@@ -73,7 +61,7 @@ protected:
     int mSize;              ///< Number of elements in the table.
     int capacity;           ///< Number of table cells.
     LinkedList<T>* table;
-    int (*hashFunction)(const T &value);
+    Hasher<T>* hasher;
     const double maxLoadFactor;
 
     /** Method rehash reallocates the table to make its capacity
@@ -85,8 +73,9 @@ protected:
 template<class T>
 void HashTable<T>::add(const T &value)
 {
-    int index = hashFunction(value); // If hashFunction is 
-                // not set then HashFunctionIsNotSetException is thrown
+    if (hasher == NULL)
+        throw HasherIsNotSetException();
+    int index = hasher->hash(value);
 
     if ((mSize + 1.0) / capacity > maxLoadFactor) // If adding new
         rehash(2 * (mSize + 1) / maxLoadFactor);  // element is making
@@ -104,8 +93,9 @@ void HashTable<T>::add(const T &value)
 template<class T>
 void HashTable<T>::remove(const T &value)
 {
-    int index = hashFunction(value) % capacity; // If hashFunction is
-                // not set then HashFunctionIsNotSetException is thrown
+    if (hasher == NULL)
+        throw HasherIsNotSetException();
+    int index = hasher->hash(value) % capacity;
 
     int chainLength = table[index].length();
     table[index].remove(value);
@@ -117,8 +107,9 @@ void HashTable<T>::remove(const T &value)
 template<class T>
 bool HashTable<T>::hasValue(const T &value)
 {
-    int index = hashFunction(value) % capacity; // If hashFunction is
-                // not set then HashFunctionIsNotSetException is thrown
+    if (hasher == NULL)
+        throw HasherIsNotSetException();
+    int index = hasher->hash(value) % capacity;
 
     if (table[index].hasValue(value))
         return true;
@@ -157,7 +148,7 @@ void HashTable<T>::rehash(int newCapacity)
         {
             T value = table[i].at(0);
             table[i].removeAt(0);
-            int index = hashFunction(value) % newCapacity;
+            int index = hasher->hash(value) % newCapacity;
             newTable[index].insert(value, 0);
         }
     delete[] table;
