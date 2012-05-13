@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file>unsetImage.png</file>
+	<file>xImage.png</file>
+	<file>oImage.png</file>
+	<file>Button.qml</file>
+	<file>Message.qml</file>
+	<file>tictactoe.qml</file>
+</qresource>
+</RCC>
