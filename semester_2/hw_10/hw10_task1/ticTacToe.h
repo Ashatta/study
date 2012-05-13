@@ -14,7 +14,7 @@ public slots:
 	void newStep(int row, int column, TicTacCell* cell);
 
 protected:
-	void gameOver();
+	void gameOver(int winner);
 
 	void checkRow(int row);
 	void checkColumn(int column);
@@ -38,4 +38,5 @@ private:
 	QIcon oImage;
 
 	QVector<QVector<TicTacCell::State> > states;
+	int steps;
 };
