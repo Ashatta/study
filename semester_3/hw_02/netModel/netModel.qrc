@@ -1,0 +1,18 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+  <file>icons/clear.png</file>
+  <file>icons/start.png</file>
+  <file>icons/stop.png</file>
+  <file>icons/linux.png</file>
+  <file>icons/mac.png</file>
+  <file>icons/windows.png</file>
+  <file>icons/connection.png</file>
+  <file>icons/linuxComputerNormal.png</file>
+  <file>icons/linuxComputerInfected.png</file>
+  <file>icons/macComputerNormal.png</file>
+  <file>icons/macComputerInfected.png</file>
+  <file>icons/windowsComputerNormal.png</file>
+  <file>icons/windowsComputerInfected.png</file>
+  <file>icons/newVirus.png</file>
+ </qresource>
+ </RCC>
