@@ -19,9 +19,7 @@ loop list = do
                              "3 - print list\n" ++
                              "h - print this help")
                    loop list
-        "0" -> do 
-                   putStrLn "Goodbye!"
-                   return ()
+        "0" -> putStrLn "Goodbye!"
         "1" -> do 
                    putStr "Value to insert: "
                    value <- readLn
