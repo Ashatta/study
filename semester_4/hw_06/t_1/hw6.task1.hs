@@ -14,3 +14,28 @@ treeFromString str = if snd parsed == "" then fst parsed else error "parse error
                                          let (right, rest) = parse second in
                                              (Node c left right, rest)
                   parse _ = error "parse error"
+
+main = do
+    let t = Node 't' 
+                (Node 'b' 
+                     (Node 'e' 
+                          Nil 
+                          (Node 't' 
+                               (Node 'b' Nil Nil) 
+                               (Node 'e' Nil Nil))) 
+                     (Node 'o' 
+                          (Node 'n' Nil Nil) 
+                          Nil)) 
+                (Node 'o' 
+                     (Node 'r' Nil Nil) 
+                     (Node 'o' 
+                          (Node 't' 
+                               Nil 
+                               (Node 'o' Nil Nil)) 
+                          Nil))
+    let str = "ntnbneentnbeeneeenonneeenonreenontenoeee"
+    if treeFromString str /= t 
+        then error "treeFromString incorrect" 
+        else if toString t /= str 
+                 then error "toString incorrect" 
+                 else putStrLn "OK"
