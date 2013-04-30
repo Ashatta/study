@@ -5,8 +5,8 @@ data Expression a = Const a |
                     Multiply (Expression a) (Expression a) |
                     Divide (Expression a) (Expression a) |
                     Power (Expression a) Int
-    deriving Show
 
+-- derivation
 derivation (Const _) = Const 0
 derivation Variable = Const 1
 derivation (Add first second) = Add (derivation first) (derivation second)
@@ -21,6 +21,7 @@ derivation (Power base power) = if power == 0
                                     then Const 0
                                     else Multiply (Const power) (Multiply (Power base (power-1)) (derivation base))
 
+-- reduce
 reduceHelper (Multiply (Const 1) second) = second
 reduceHelper (Multiply first (Const 1)) = first
 reduceHelper (Multiply (Const 0) _) = Const 0
@@ -43,3 +44,30 @@ reduce (Multiply first second) = reduceHelper (Multiply (reduce first) (reduce s
 reduce (Divide first second) = reduceHelper (Divide (reduce first) (reduce second))
 reduce (Power base power) = reduceHelper (Power (reduce base) power)
 reduce other = other
+
+-- show
+showInBrackets x = '(':(show x) ++ ")"
+
+instance Show a => Show (Expression a) where
+    show (Const x) = show x
+    show Variable = "x"
+    show (Add x y) = show x ++ " + " ++ show y
+    show (Subtract x y) = show x ++ " - " ++ showSubtract y
+        where showSubtract x@(Add _ _) = showInBrackets x
+              showSubtract x@(Subtract _ _) = showInBrackets x
+              showSubtract x = show x
+    show (Multiply x y) = showMulty x ++ " * " ++ showMulty y
+        where showMulty x@(Add _ _) = showInBrackets x
+              showMulty x@(Subtract _ _) = showInBrackets x
+              showMulty x = show x
+    show (Divide x y) = show x ++ " / " ++ showDivide y
+        where showDivide Variable = "x"
+              showDivide (Const x) = show x
+              showDivide x@(Power _ _) = show x
+              showDivide x = showInBrackets x
+    show (Power base power) = (showBase base) ++ '^':(showPower power)
+        where showBase (Const x) = show x
+              showBase Variable = "x"
+              showBase x = showInBrackets x
+              showPower n | n >= 0 = show n
+                                  | otherwise = '(':(show n) ++ ")"
